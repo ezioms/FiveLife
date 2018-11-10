@@ -1,4 +1,190 @@
+"use strict"
+
+require('./Basic/cLogin');
+require('./Basic/cMoney');
+require('./Character/cCharacterCreator');
+require('./Business/cBusiness');
+require('./Business/cCarDealership');
+require('./Business/cClothingShop');
+require('./Business/cBarberShop');
+require('./Business/cGasStation');
+require('./Basic/cVehicle');
+require('./Jobs/cOrangeCollector');
+require('./Factions/cGarage.js');
+require('./Factions/cHospital.js');
+require('./Factions/cPolice.js');
+require('./Factions/cPrison.js');
+require('./Basic/cMenu');
+require('./Basic/cGPS');
+
+//Keys
 mp.gui.chat.safeMode = false;
+
+mp.keys.bind(69, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-E');
+});
+
+mp.keys.bind(96, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num0');
+});
+
+mp.keys.bind(97, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num1');
+});
+
+mp.keys.bind(98, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num2');
+});
+
+mp.keys.bind(99, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num3');
+});
+
+mp.keys.bind(100, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num4');
+});
+
+mp.keys.bind(101, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num5');
+});
+
+mp.keys.bind(102, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num6');
+});
+
+mp.keys.bind(103, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num7');
+});
+
+mp.keys.bind(104, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num8');
+});
+
+mp.keys.bind(105, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num9');
+});
+
+mp.keys.bind(115, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-F4');
+});
+
+mp.keys.bind(107, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-Num+');
+});
+
+mp.keys.bind(77, false, function() {
+    if (mp.gui.cursor.visible) return;
+    mp.events.callRemote('sKeys-M');
+});
+
+// Misc
+let cef = null;
+let camera = null;
+const player = mp.players.local;
+
+function prettify(num) {
+    const n = num.toString();
+    const separator = " ";
+    return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1${separator}`);
+}
+exports.prettify = prettify;
+
+const roundNum = (number, ends = 0) => parseFloat(number.toFixed(ends))
+exports.roundNum = roundNum;
+
+// CEF //
+function prepareToCef(blurred = null) {
+	mp.gui.cursor.visible = true;
+	mp.game.ui.displayRadar(false);
+	mp.gui.chat.show(false);
+	if (blurred) mp.game.graphics.transitionToBlurred(blurred);
+}
+exports.prepareToCef = prepareToCef;
+
+
+function injectCef(execute) {
+	if(!cef) return;
+	cef.execute(execute);
+}
+exports.injectCef = injectCef;
+exports.openCef = openCef;
+
+
+function closeCef() {
+	if (cef) {
+		cef.destroy(); 
+		cef = null;
+	}
+	mp.gui.cursor.visible = false;
+	mp.game.ui.displayRadar(true);
+	mp.gui.chat.show(true);
+	mp.game.graphics.transitionFromBlurred(1);
+}
+exports.closeCef = closeCef;
+// CEF //
+
+// CAMERA //
+function createCam(x, y, z, rx, ry, rz, viewangle) {
+	camera = mp.cameras.new("Cam", {x, y, z}, {x: rx, y: ry, z: rz}, viewangle);
+	camera.setActive(true);
+	mp.game.cam.renderScriptCams(true, true, 20000000000000000000000000, false, false);
+}
+exports.createCam = createCam;
+
+function destroyCam() {
+	if (!camera) return;
+	camera.setActive(false);
+	mp.game.cam.renderScriptCams(false, true, 0, true, true);
+	camera.destroy();
+	camera = null;
+}
+exports.destroyCam = destroyCam;
+// CAMERA //
+
+mp.events.add(
+{		
+	"cInjectCef" : execute => injectCef(execute),
+	"cCloseCef" : () => closeCef(),
+	"cDestroyCam" : () => destroyCam(),
+
+	"cCloseCefAndDestroyCam" : () => {
+		closeCef();
+		destroyCam();
+	},
+
+	"cChangeHeading" : angle => player.setHeading(angle),
+
+	"cMisc-CreateChooseWindow" : (execute, confirmEvent, rejectEvent) => {
+		prepareToCef(500);
+		openCef("package://freeroam/browser/Misc/chooseWindow.html");
+		const str1 = `app.confirmEvent = '${confirmEvent}';`;
+		const str2 = `app.rejectEvent = '${rejectEvent}';`;
+		const inject = execute + str1+ str2;
+		injectCef(inject);
+	},
+
+	"cMisc-CallServerEvent" : (eventName, id, price) => mp.events.callRemote(eventName, id, price),
+
+	"cMisc-CallServerEvenWithTimeout" : (eventName, timeout) => {
+		setTimeout(() => {
+			mp.events.callRemote(eventName);
+		}, timeout);
+	}
+	
+});
 
 // CEF browser.
 let menu;
