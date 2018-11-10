@@ -121,12 +121,10 @@ mp.events.add('clientData', function() {
                 player.vehicle.setNeonColour(color.r, color.g, color.b);
             }
         }
-
         break;
     }
 });
 
 mp.events.add('radiochange', (player, vehicle_data) => {
 	player.vehicle.setVariable('radio', vehicle_data);
-	player.notify("Radio changed to : " + vehicle_data);
 });

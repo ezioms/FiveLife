@@ -1,6 +1,18 @@
-// Init events.
-require('./events.js');
-// Init commands.
-require('./commands.js');
-// Init Voice
-require('./voice.js');
+require('./Basic/Auth/sLogin');
+require('./Basic/Auth/sRegister');
+require('./Basic/sChat');
+require('./Basic/Money/sATM');
+require('./Business/sBarberShop');
+require('./Business/sClothingShop');
+require('./Business/sCheapCarDealership');
+require('./Business/sCommercialCarDealership');
+require('./Business/sGasStation');
+require('./Jobs/sCluckinBellCourier');
+require('./Factions/Police/sPolice');
+require('./Basic/sMenu');
+require('./Basic/sGPS');
+require('./mysql');
+require('./events');
+require('./commands');
+require('./voice');
+require('./misc');
