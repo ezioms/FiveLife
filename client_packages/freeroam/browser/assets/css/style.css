@@ -85,10 +85,10 @@ body {
     /* Убираем выделение текста в заголовке */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .window_header .close_window {
@@ -148,12 +148,27 @@ body {
     width: 95%;
     margin: 0 auto;
 }
+
 /*Draggble window end */
 
 /* Colorpicker */
-#color_window { width: 35vh !important; }
-#picker { width: 92%; height: 35vh; float: left }
-#slide { margin-left: 5px; width: 6%; height: 35vh; float: left }
+#color_window {
+    width: 35vh !important;
+}
+
+#picker {
+    width: 92%;
+    height: 35vh;
+    float: left
+}
+
+#slide {
+    margin-left: 5px;
+    width: 6%;
+    height: 35vh;
+    float: left
+}
+
 .color_button {
     width: 31%;
     height: 3vh;
@@ -173,6 +188,7 @@ body {
 .color_button_active {
     background-color: rgba(120, 120, 120, 0.95) !important;
 }
+
 /* Colorpicker end */
 
 .bind_desc {
@@ -210,7 +226,7 @@ body {
 }
 
 #online_players {
-      position: absolute;
+    position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 9999;

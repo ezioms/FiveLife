@@ -1,1 +1,1 @@
-require('freeroam/script.js');
+require('./freeroam/script.js');

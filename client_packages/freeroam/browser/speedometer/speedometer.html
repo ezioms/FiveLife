@@ -33,9 +33,9 @@
 				if(gas < 15){
 					document.getElementById("gasState").innerHTML = "<img src=\"..\\Images\\gas_critical.png\" width=\"22px\">";
 				}
-				<!-- if( gas > 15 && gas < 50 ){ -->
-					<!-- document.getElementById("gasState").innerHTML = "<img src=\"..\\Images\\gas_low.png\" width=\"22px\">"; -->
-				<!-- } -->
+				if( gas > 10 && gas < 50 ) {
+			        document.getElementById("gasState").innerHTML = "<img src=\"..\\Images\\gas_low.png\" width=\"22px\">";
+				}
 			}
 			function updateHealth(rotation)
 			{ 

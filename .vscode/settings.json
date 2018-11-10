@@ -1,0 +1,20 @@
+{
+    "javascript.suggest.autoImports": false,
+    "javascript.suggestionActions.enabled": false,
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+    "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+    "typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+    "typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
+    "typescript.suggest.autoImports": false,
+    "typescript.suggest.enabled": false,
+    "typescript.suggest.paths": false,
+    "typescript.suggestionActions.enabled": false,
+    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "javascript.format.insertSpaceAfterCommaDelimiter": false,
+    "jsDocCompletion.enabled": false,
+    "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "javascript.updateImportsOnFileMove.enabled": "never"
+}
