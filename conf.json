@@ -1,0 +1,17 @@
+{
+	"maxplayers" : 1000,
+	"name" : "[Ger | Voice] Five - Life - Alpha", 
+	"gamemode" : "freeroam", 
+	"stream-distance" : 750.0,
+        "sync-rate" : 85,
+	"announce" : true,
+        "encryption" : true,
+        "bind" : "0.0.0.0",
+	"port": 22005,
+        "enable-http-security" : true,
+        "disallow-multiple-connections-per-ip" : true,
+        "url" : "https://five-life.com",
+        "language" : "de",
+        "voice-chat" : true,
+        "voice-chat-sample-rate" : 48000
+}
