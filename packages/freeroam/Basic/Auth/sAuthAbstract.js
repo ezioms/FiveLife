@@ -16,11 +16,11 @@ class AbstractAuth {
             from: `${mailer.getMailAdress()}`,
             to: `${email}`,
             subject: `Verification code: ${code}`,
-            text: `Hallo! Dein Verifizierungscode lautet: ${code}`,
-            html: `<b>Hallo!</b><br>Dein Verifizierungscode lautet: ${code}`,
+            text: `Bonjour! Votre code de vérification est: ${code}`,
+            html: `<b>Bonjour!</b><br>Votre code de vérification est: ${code}`,
         }
         mailer.sendMail(mail);
-        player.call("cInjectCef", [`app.showInfo('Bitte siehe in dein E-Mail Postfach nach!');`]);
+        player.call("cInjectCef", [`app.showInfo('S il vous plaît voir votre boîte de réception e mail!');`]);
     }
 
     hashPassword(str) {
@@ -32,10 +32,10 @@ class AbstractAuth {
 
     canCheckCode(player) {
         if (player.verificationCodeTries < 5) return true;
-        this.showError(player, `Zu viele Fehlversuche bei der Codeeingabe`);
+        this.showError(player, `Trop de tentatives infructueuses de saisie de code`);
         player.loggedIn = false;
-        misc.log.warn(`${player.socialClub} Zu viele Fehlversuche bei der Codeeingabe`);
-        player.kick('Du hast zu viele fehlversuche bei der Codeeingabe.');
+        misc.log.warn(`${player.socialClub} Trop de tentatives infructueuses de saisie de code`);
+        player.kick('Vous avez trop d erreurs dans la saisie du code.');
         return false;
     }
 
@@ -43,7 +43,7 @@ class AbstractAuth {
         if (!this.canCheckCode(player)) return false;
         if (player.verificationCode !== code) {
             player.verificationCodeTries++;
-            this.showError(player, `Falscher Code!`);
+            this.showError(player, `Mauvais code!`);
             return false;
         }
         return true;
