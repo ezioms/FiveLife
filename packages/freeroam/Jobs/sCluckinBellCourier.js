@@ -4,7 +4,7 @@ const Job = require('./sJob');
 
 class ClickinBellCourier extends Job {
     constructor() {
-        const d = { name: "Cluckin Bell Courier", x: -145.918, y: 6303.983, z: 31.559, rot: 131.94, dim: 0 }
+        const d = { name: "Courrier", x: -145.918, y: 6303.983, z: 31.559, rot: 131.94, dim: 0 }
         super(d);
         this.getOrderCoord = { x: -139.975, y: 6301.485, z: 31.488, rot: 134.19 };
         this.deliveryPoints = [
@@ -116,21 +116,21 @@ class ClickinBellCourier extends Job {
 
     enteredMainShape(player) {
         if (this.isPlayerWorksHere(player)) {
-            player.notify(`Drücken Sie ~b~ E ~s~, um die Arbeit als Delivery Men abzuschließen!`);
-            if (typeof player.job.currentOrder === "number") player.outputChatBox(`!{225, 0, 0}Sie arbeiten bereits in einem anderen Job!`);
+            player.notify(`Drücken Sie ~b~ E ~s~, pour compléter le travail en tant que livreurs!`);
+            if (typeof player.job.currentOrder === "number") player.outputChatBox(`!{225, 0, 0} Vous travaillez déjà dans un autre travail!`);
         }
-        else player.notify(`Drücken Sie ~b~ E ~s~, um mit der Arbeit als Delivery Men zu beginnen!`);
+        else player.notify(`Drücken Sie ~b~ E ~s~, commencer à travailler comme livreur!`);
     }
 
     pressedKeyOnMainShape(player) {
         if (this.isPlayerWorksHere(player)) this.finishWork(player);
-        else if (this.isPlayerWorksOnOtherJob(player)) player.notify(`~r~Sie arbeiten bereits an einem anderen Job!`);
+        else if (this.isPlayerWorksOnOtherJob(player)) player.notify(`~r~Vous travaillez déjà sur un autre travail!`);
         else this.startWork(player);
     }
 
     finishWork(player) {
         if (typeof player.job.currentOrder === "number") {
-            player.newFine(500, `Cluckin Bell - Sie haben die Bestellung nicht zugestellt! Sie werden jetzt $500 bezahlen!`);
+            player.newFine(500, `Courrier - Vous n'avez pas livré la commande! Vous allez maintenant payer 500$!`);
             player.removeLoyality(10);
         }
         this.cancelCurrentOrder(player);
@@ -138,7 +138,7 @@ class ClickinBellCourier extends Job {
     }
 
     startWork(player) {
-        if (player.loyality < 5) return player.notify(`~r~Sie brauchen wenigstens 5 Respektpunkte!`);
+        if (player.loyality < 5) return player.notify(`~r~Vous avez besoin d au moins 5 points de respect!`);
         super.startWork(player);
         player.job = { name: this.name, currentOrder: false, canGetNewOrder: false };
         this.getOrderMarker.showFor(player);
@@ -146,9 +146,9 @@ class ClickinBellCourier extends Job {
 
     playerEntersGetOrderShape(player) {
         if (!this.isPlayerWorksHere(player)) return;
-        if (typeof player.job.currentOrder === "number") return player.notify(`~r~Sie können keine neue Bestellungen annehmen!`);
+        if (typeof player.job.currentOrder === "number") return player.notify(`~r~Vous ne pouvez pas accepter de nouvelles commandes!`);
         player.job.canGetNewOrder = true;
-        player.notify(`Drücken Sie ~b~ E ~s~, um eine neue Reihenfolge zu erhalten!`);
+        player.notify(`Appuyez sur ~b~ E ~s~ pour obtenir une nouvelle commande!`);
     }
 
     playerPressedKeyOnNewOrderShape(player) {
