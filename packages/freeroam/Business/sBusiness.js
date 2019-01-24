@@ -77,14 +77,14 @@ class business {
 
 	async buyBusiness(player) {
 		if (this.ownerId) return;
-		if (this.isPlayerHasBusiness(player.guid)) return player.notify(`~r~Sie können nicht mehr als ein Geschäft besitzen!`);
+		if (this.isPlayerHasBusiness(player.guid)) return player.notify(`~r~Vous ne pouvez pas posséder plus d'une entreprise!`);
 		const canBuy = await player.changeMoney(-this.price);
 		if (!canBuy) return;
 		this.ownerId = player.guid;
 		misc.log.debug(`${player.name} bought a businnes №${this.id}`);
 		this.updateMarker();
 		await this.updateOwner();
-		player.notify(`~g~Erfolgreich!`);
+		player.notify(`~g~Succès!`);
 	}
 	
 	async sellBusiness(ownerId) {
