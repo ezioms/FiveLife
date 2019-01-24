@@ -13,7 +13,7 @@ class GasStation extends business {
     setLocalSettings() {
         this.buyerColshape.gasStationId = this.id;
         this.blip.model = 361;
-        this.blip.name = `Tankstelle`;
+        this.blip.name = `Station`;
     }
 
     createFillingColshape() {
@@ -59,11 +59,11 @@ class GasStation extends business {
         if (!vehicle) return;
 
         if (vehicle.engine) {
-            player.notify(`~r~Bitte schalten Sie den Motor ab!`);
+            player.notify(`~r~S'il vous plaît éteindre le moteur!`);
             return;
         }
         if (vehicle.getOccupants().length > 0) {
-            player.notify(`~r~Bitten Sie ihre Passagiere das Fahrzeug zu verlassen!`);
+            player.notify(`~r~Demandez à vos passagers de quitter le véhicule!`);
             return;
         }
 
@@ -75,8 +75,8 @@ class GasStation extends business {
         this.updateTempGain(tax);
         vehicle.fillUp(carData.litres);
 
-        player.notify(`~g~Erfolgreich!`);
-        misc.log.debug(`${player.name} fill up car for $${price}`);
+        player.notify(`~g~Succès!`);
+        misc.log.debug(`${player.name} remplir la voiture pour $${price}`);
     }
 
     async updateFillingData(player, radius) {
@@ -89,7 +89,7 @@ class GasStation extends business {
         }
         const coord = JSON.stringify(obj);
         await misc.query(`UPDATE gasstation SET fillingCoord = '${coord}' WHERE id = ${this.id}`);
-        player.notify(`~g~Erfolgreich!`);
+        player.notify(`~g~Succès!`);
     }
 
     async updateCamData(player, viewangle) {
@@ -105,7 +105,7 @@ class GasStation extends business {
         await misc.query(`UPDATE gasstation SET camData = '${data}' WHERE id = ${this.id}`);
         this.camData = data;
 
-        player.notify(`~g~Erfolgreich!`);
+        player.notify(`~g~Succès!`);
     }
 
     updateTempGain(newGain) {
@@ -126,7 +126,7 @@ class GasStation extends business {
         execute += `app.updateCars('${cars}');`
         
         player.call("cGasStation-OpenBuyerMenu", [execute, this.camData]);
-        misc.log.debug(`${player.name} enter a gas station menu`);
+        misc.log.debug(`${player.name} entrer dans un menu de station d'essence`);
     }	
 }
 
@@ -135,13 +135,13 @@ mp.events.add({
         if (!player.loggedIn) return;
         if (player.vehicle && colshape.gasStationFillingId) {
             const shop = business.getBusiness(colshape.gasStationFillingId);
-            player.notify(`Preis pro Liter: ~g~$${shop.fuelprice}`);
+            player.notify(`Prix au litre: ~g~$${shop.fuelprice}`);
         }
     },
     
     "playerExitColshape" : (player, colshape) => {
         if (!player.loggedIn) return;
-        if (player.vehicle && colshape.gasStationFillingId) player.notify(`~g~Gute Weiterfahrt, bis zum nächsten mal!`);
+        if (player.vehicle && colshape.gasStationFillingId) player.notify(`~g~Bonne route, à la prochaine!`);
     },
 
     "sGasStation-FillUp" : (player, str) => {
@@ -167,10 +167,10 @@ mp.events.addCommand({
         const id = business.getCountOfBusinesses() + 1;
         const coord = misc.getPlayerCoordJSON(player);
         const price = Number(enteredprice.replace(/\D+/g,""));
-        const query1 = misc.query(`INSERT INTO business (title, coord, price) VALUES ('Tankstelle', '${coord}', '${price}');`);
+        const query1 = misc.query(`INSERT INTO business (title, coord, price) VALUES ('Service', '${coord}', '${price}');`);
         const query2 = misc.query(`INSERT INTO gasstation (id) VALUES ('${id}');`);	
         await Promise.all([query1, query2]);
-        player.outputChatBox("!{#4caf50} Gas Station successfully created!");
+        player.outputChatBox("!{#4caf50} Station d essence créée avec succès!");
     },	
 
     'setgasstationfillingpos' : async (player, fullText, id, radius) => {
