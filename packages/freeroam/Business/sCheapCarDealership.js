@@ -7,7 +7,7 @@ class CheapCarDealership extends carDealership {
 	
 	setLocalSettings() {
 		this.blip.model = 225;
-		this.blip.name = `Autohaus`;
+		this.blip.name = `Concessionaire`;
 		this.blip.color = 31;
 	}
 
@@ -39,16 +39,16 @@ mp.events.addCommand({
 		const query1 = misc.query(`INSERT INTO business (title, coord, price) VALUES ('Cheap Car Dealership', '${coord}', '${price}');`);
 		const query2 = misc.query(`INSERT INTO cheapcardealership (id) VALUES ('${id}');`);	
 		await Promise.all([query1, query2]);
-		player.outputChatBox("!{#4caf50} Autohaus erfolgreich gegründet!");
-		player.outputChatBox("!{#4caf50} Schreiben Sie nun /setbusbuyermenu [id] und andere Befehle!");
+		player.outputChatBox("!{#4caf50} Concessionaire fondé avec succès!");
+		player.outputChatBox("!{#4caf50} Ecrire maintenant /setbusbuyermenu [id] et d'autres commandes!");
 	},	
 
 	'setccardealernewcarcoord' : async (player, id) => {
 		if (player.adminLvl < 1) return;
-		if (!player.vehicle) return player.notify(`~r~You're not in vehicle!`);
+		if (!player.vehicle) return player.notify(`~r~Vous n êtes pas dans le véhicule!`);
 		const coord = misc.getPlayerCoordJSON(player);
 		await misc.query(`UPDATE cheapcardealership SET newCarCoord = '${coord}' WHERE id = ${id}`);
-		player.notify(`~g~Erfolgreich`);
+		player.notify(`~g~Réussi`);
 
 	},	
 });
