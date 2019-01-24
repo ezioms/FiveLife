@@ -6,7 +6,7 @@ class CommercialCarDealership extends carDealership {
 	
 	setLocalSettings() {
 		this.blip.model = 634;
-		this.blip.name = `Autoverkäufer`;
+		this.blip.name = `Concessionaire`;
 		this.blip.color = 38;
 	}
 
@@ -16,7 +16,7 @@ class CommercialCarDealership extends carDealership {
 		execute += `app.margin = ${this.margin};`;
 
 		player.call("cCommercialCarDealership-OpenBuyerMenu", [execute]);
-		misc.log.debug(`${player.name} enter a commercial car dealership menu`);
+		misc.log.debug(`${player.name} entrer dans un menu de concessionnaire de voitures commerciales`);
 	}
 }
 
@@ -37,8 +37,8 @@ mp.events.addCommand({
 		const query1 = misc.query(`INSERT INTO business (title, coord, price) VALUES ('Autoverkäufer', '${coord}', '${price}');`);
 		const query2 = misc.query(`INSERT INTO commercialcardealership (id) VALUES ('${id}');`);	
 		await Promise.all([query1, query2]);
-		player.outputChatBox("!{#4caf50} Cheap Car Dealership successfully created!");
-		player.outputChatBox("!{#4caf50} Benutzen sie nun den Befehl /setbusbuyermenu [id] oder einen andere Befehl!");
+		player.outputChatBox("!{#4caf50} Concession de voitures bon marché crée avec succès!");
+		player.outputChatBox("!{#4caf50} Maintenant, utilisez la commande /setbusbuyermenu [id] ou une autre commande!");
 	},	
 
 	'setcommercialcardealernewcarcoord' : async (player, id) => {
@@ -46,6 +46,6 @@ mp.events.addCommand({
 		if (!player.vehicle) return player.nofity(`~r~Sie sitzen in keinem Fahrzeug!`);
 		const coord = misc.getPlayerCoordJSON(player);
 		await misc.query(`UPDATE commercialcardealership SET newCarCoord = '${coord}' WHERE id = ${id}`);
-		player.notify(`~g~Erfolgreich`);
+		player.notify(`~g~Réussi`);
 	},	
 });
