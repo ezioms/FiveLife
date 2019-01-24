@@ -10,7 +10,7 @@ class ClothingShop extends business {
 	
 	setLocalSettings() {
 		this.blip.model = 71;
-		this.blip.name = `Friesuer`;
+		this.blip.name = `Friseur`;
 	}
 	
 	openBuyerMenu(player) {
@@ -44,7 +44,7 @@ class ClothingShop extends business {
 		await misc.query(`UPDATE barbershop SET camData = '${data}' WHERE id = ${this.id}`);
 		this.camData = obj;
 
-		player.notify(`~g~Erfolgreich!`);
+		player.notify(`~g~Réussi!`);
 	}
 
 	async buyThing(player, d) {
@@ -56,7 +56,7 @@ class ClothingShop extends business {
 		await this.addMoneyToBalance(shopTax);
 		await headOverlaySingletone.saveHeadOverlay(player, d);
 		player.notify(`~g~Erfolgreich!`);
-		misc.log.debug(`${player.name} hat etwas beim Frisuer für $${endPrice} erworben`);
+		misc.log.debug(`${player.name} a quelque chose pour le coiffeur pour $${endPrice} acquis`);
 	}
 
 	getPrice(d) {
@@ -109,7 +109,7 @@ mp.events.addCommand({
 		const query1 = misc.query(`INSERT INTO business (id, title, coord, price) VALUES ('${id}', 'Barber Shop', '${coord}', '${price}');`);
 		const query2 = misc.query(`INSERT INTO barbershop (id) VALUES ('${id}');`);	
 		await Promise.all([query1, query2]);
-		player.outputChatBox("!{#4caf50} Barber shop successfully created!");
+		player.outputChatBox("!{#4caf50} Salon de coiffure créé avec succès!");
 	},	
 
 	'setbscamdata' : async (player, id) => {
