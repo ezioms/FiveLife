@@ -7,24 +7,24 @@ const time = require('./sTime');
 class ChatSingleton {
 	constructor () {
 		mp.events.add('playerChat', (player, message) => {
-			if (!message) return player.notify("Bitte geben Sie eine Nachricht ein");
+			if (!message) return player.notify("S il vous plaît entrer un message");
 			this.sayRP(player, message);
 			misc.log.debug(`${player.name}[${player.id}]: ${message}`);
 		});
 
 		mp.events.addCommand({
 			'me' : (player, fullText) => {
-				if (!fullText) return player.notify("Bitte geben Sie eine Nachricht ein");
+				if (!fullText) return player.notify("S il vous plaît entrer un message");
 				this.sayME(player, fullText);
 			}, 
 			
 			'do' : (player, fullText) => {
-				if (!fullText) return player.notify("Bitte geben Sie eine Nachricht ein");
+				if (!fullText) return player.notify("S il vous plaît entrer un message");
 				this.sayDO(player, fullText);
 			}, 
 
 			'g' : (player, fullText) => {
-				if (!fullText) return player.notify("Bitte geben Sie eine Nachricht ein");
+				if (!fullText) return player.notify("S il vous plaît entrer un message");
 				mp.players.broadcast(`[${time.getTime()}] [Global] ${player.name}: ${fullText}`);
 				misc.log.debug(`${player.name} ${fullText}`);
 			}, 
