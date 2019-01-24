@@ -10,16 +10,16 @@ class LoginSingleton extends AbstractAuth {
         const pass = this.hashPassword(data.pass);
         const d = await misc.query(`SELECT id, email, password, socialclub FROM users WHERE email = '${data.email}' LIMIT 1`);
         if (!d[0]) {
-            return this.showError(player, "Dieser Account existiert nicht");
+            return this.showError(player, "Ce compte n'existe pas");
         }
         if (d[0].socialclub !== player.socialClub) {
             return player.call("cInjectCef", [`app.showCode = true;`]);
         }
         if (d[0].password !== pass) {
-            return this.showError(player, `Falsches Passwort!`);
+            return this.showError(player, `Mauvais mot de passe!`);
         }
         else if (this.isAlreadyPlaying(d[0].email)) {
-            this.showError(player, `Du kannst dich nicht gleichzeitig von Zwei Geräte anmelden!`);
+            this.showError(player, `Vous ne pouvez pas vous connecter à partir de deux appareils en même temps!`);
             player.loggedIn = false;
             return player.kick('Doppelte Anmeldung');
         }
@@ -43,20 +43,20 @@ class LoginSingleton extends AbstractAuth {
         await playerSingleton.loadAccount(player, id);
 
         player.outputChatBox(`Spawn a vehicle: /veh`);
-        player.outputChatBox(`Globaler Chat: / g [Nachricht]`);
-        player.outputChatBox(`Wenn Sie einen Account haben und Daten wiederherstellen möchten, schreiben Sie hier im Chat Ihren alten Namen. Ich werde es in Logs überprüfen`);
-        player.outputChatBox(`Drücke M um das Menü zu öffnen`);
+        player.outputChatBox(`Chat: / g [Message]`);
+        player.outputChatBox(`Si vous avez un compte et souhaitez restaurer des données, écrivez votre ancien nom ici dans le chat. Je vais vérifier dans les journaux`);
+        player.outputChatBox(`Appuyez sur M pour ouvrir le menu.`);
         const onlinePlayers = mp.players.toArray();
         if (onlinePlayers.length < 30) {
             for (const p of onlinePlayers) {
-                p.outputChatBox(`[${misc.getTime()}] ${player.name} verbunden`);
+                p.outputChatBox(`[${misc.getTime()}] ${player.name} rejoint`);
             }
         }
     }
 
     tryGetCodeToLogin(player, email) {
         if (!mailer.isEmailValid(email)) {
-            return this.showError(player, "Falsche E-Mail Adresse");
+            return this.showError(player, "Faux E-Mail Adresse");
         }
         this.trySendCode(player, email);
     }
@@ -67,15 +67,15 @@ class LoginSingleton extends AbstractAuth {
         if (!this.checkCode(player, data.code)) return;
         const d = await misc.query(`SELECT id, email, password FROM users WHERE email = '${data.email}' LIMIT 1`);
         if (!d[0]) {
-            return this.showError(player, "Dieser Account existiert nicht");
+            return this.showError(player, "Ce compte n'existe pas");
         }
         if (d[0].password !== pass) {
             player.call("cInjectCef", [`app.showCode = false; app.enteredCode = "";`]);
-            return this.showError(player, `Falsches Passwort!`);
+            return this.showError(player, `Mauvais mot de passe!`);
         }
         if (this.isAlreadyPlaying(d[0].email)) {
-            this.showError(player, `Du kannst dich nicht gleichzeitig von Zwei Geräte anmelden!`);
-            return player.kick('Doppelte Anmeldung');
+            this.showError(player, `Vous ne pouvez pas vous connecter à partir de deux appareils en même temps!`);
+            return player.kick('Double inscription');
         }
         this.loadAccount(player, d[0].id);
     }
@@ -102,7 +102,7 @@ mp.events.add({
         const onlinePlayers = mp.players.toArray();
         if (onlinePlayers.length < 30) {
             for (const p of onlinePlayers) {
-                p.outputChatBox(`[${misc.getTime()}] ${player.name} verlassen`);
+                p.outputChatBox(`[${misc.getTime()}] ${player.name} quitte`);
             }
         } 
     },
