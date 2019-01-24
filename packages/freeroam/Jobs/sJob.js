@@ -65,7 +65,7 @@ class Job {
     }
 
     enteredMainShape(player) {
-        player.notify(`Drücken Sie ~b~ E ~s~, um das Menü zu öffnen`);
+        player.notify(`Appuyez sur ~b~ E ~s~ pour ouvrir le menu`);
     }
 
     startWork(player) {
