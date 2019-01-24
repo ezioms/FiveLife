@@ -12,7 +12,7 @@ class ClothingShop extends business {
 	setLocalSettings() {
 		this.buyerColshape.clothingShopId = this.id;
 		this.blip.model = 73;
-		this.blip.name = `Kleidergeschäft`;
+		this.blip.name = `Vêtements`;
 	}
 
 	async buyCloth(player, d) {
@@ -24,8 +24,8 @@ class ClothingShop extends business {
 
 		await this.addMoneyToBalance(shopTax);
 		await clothes.saveClothes(player, d);
-		player.notify(`~g~Erfolgreich!`);
-		misc.log.debug(`${player.name} hat Kleidung im Wert von $${endPrice} erworben`);
+		player.notify(`~g~Succès!`);
+		misc.log.debug(`${player.name} a des vêtements d'une valeur de $${endPrice} acquis`);
 	}
 
 	async updateCamData(player) {
@@ -41,7 +41,7 @@ class ClothingShop extends business {
 		await misc.query(`UPDATE clothingshop SET camData = '${data}' WHERE id = ${this.id}`);
 		this.camData = obj;
 
-		player.notify(`~g~Erfolgreich!`);
+		player.notify(`~g~Succès!`);
 	}
 
 	openBuyerMenu(player) {
@@ -89,10 +89,10 @@ mp.events.addCommand({
 		const id = business.getCountOfBusinesses() + 1;
 		const coord = misc.getPlayerCoordJSON(player);
 		const price = Number(enteredprice.replace(/\D+/g,""));
-		const query1 = misc.query(`INSERT INTO business (id, title, coord, price) VALUES ('${id}', 'Kleidergeschäft', '${coord}', '${price}');`);
+		const query1 = misc.query(`INSERT INTO business (id, title, coord, price) VALUES ('${id}', 'Vêtements', '${coord}', '${price}');`);
 		const query2 = misc.query(`INSERT INTO clothingshop (id) VALUES ('${id}');`);	
 		await Promise.all([query1, query2]);
-		player.outputChatBox("!{#4caf50} Clothing shop successfully created!");
+		player.outputChatBox("!{#4caf50} Magasin de vêtements créé avec succès!");
 	},	
 
 	'setchbuyerstandcoord' : async (player, id) => {
