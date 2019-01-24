@@ -6,7 +6,7 @@ class ATMSingletone {
 			"playerEnterColshape" : (player, shape) => {
 				if (!player.loggedIn || player.vehicle || !shape.atm) return;
 				player.canOpen.ATM = true;
-				player.notify("Drücken Sie ~b~ E ~s~, um das ATM-Menü zu öffnen");
+				player.notify("Appuyez sur ~b~E~s~ pour ouvrir le menu ATM");
 			},
 			"sKeys-E" : (player) => {
 				if (!player.loggedIn || !player.canOpen.ATM) return;
