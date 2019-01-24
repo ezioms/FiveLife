@@ -35,7 +35,7 @@ class MoneySingletone {
 			if (!misc.isValueNumber(value) || value < 0) return;
 			await misc.query(`UPDATE usersMoney SET bank = bank + ${value} WHERE id = '${this.guid}' LIMIT 1`);
 			this.money.bank += value;
-			this.call("cMoney-SendNotification", ["Neue Zahlung: ~g~$${value}. ~w~${comment}"]);
+			this.call("cMoney-SendNotification", ["Nouveau paiement: ~g~$${value}. ~w~${comment}"]);
 		}
 
 		player.payTax = async function(value, comment) {
@@ -43,7 +43,7 @@ class MoneySingletone {
 			if (value > this.money.tax) return false;
 			await misc.query(`UPDATE usersMoney SET tax = tax - ${value} WHERE id = '${this.guid}'`);
 			this.money.tax -= value;
-			this.call("cMoney-SendNotification", ["Neue Tax Zahlung: ~g~$${value}. ~w~${comment}"]);
+			this.call("cMoney-SendNotification", ["Nouveau paiement de taxe: ~g~$${value}. ~w~${comment}"]);
 			return true;
 		}
 
@@ -56,7 +56,7 @@ class MoneySingletone {
 			}
 			misc.query(`UPDATE usersMoney SET fines = '${JSON.stringify(this.money.fines)}' WHERE id = '${this.guid}'`);
 			this.money.fines.push(newFine);
-			this.call("cMoney-SendNotification", ["Neue Strafe: ~r~$${value}. ~w~${comment}"]);
+			this.call("cMoney-SendNotification", ["Nouvelle punition: ~r~$${value}. ~w~${comment}"]);
 			misc.log.debug(`New fine: ${player.name}, $${value}, ${comment}`);
 		}
 	}
@@ -88,16 +88,15 @@ class MoneySingletone {
 const moneySingletone = new MoneySingletone();
 module.exports = moneySingletone;
 
-
 mp.events.addCommand({	
 	'givecash' : (admin, fullText, id, value) => {
 		if (admin.adminLvl < 1) return;
 		const player = mp.players.at(+id);
-		if (!player) return admin.outputChatBox(`!{200, 0, 0} Bürger nicht gefunden!`);
+		if (!player) return admin.outputChatBox(`!{200, 0, 0} Citoyen non trouvé!`);
 		player.changeMoney(+value);
-		admin.outputChatBox(`!{0, 200, 0}Sie geben $${+value} zu ${player.name}!`);
-		player.outputChatBox(`!{0, 200, 0}${admin.name} gab Ihnen $${+value}!`);
-		misc.log.info(`${admin.name} gab dem Bürger ${player.name} $${+value}`);
+	        admin.outputChatBox(`!{0, 200, 0}Vous donne $${+value} zu ${player.name}!`);
+		player.outputChatBox(`!{0, 200, 0}${admin.name} vous a donné $${+value}!`);
+		misc.log.info(`${admin.name} a donné le citoyen ${player.name} $${+value}`);
 	},
 
 });
