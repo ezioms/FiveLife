@@ -40,11 +40,11 @@ class Vehicle {
 		vehicle.toggleDoorsLock = function(player) {
 			if (vehicle.locked) {
 				this.unlock();
-				player.outputChatBox(`${this.title} !{0, 200, 0} entsperrt`);
+				player.outputChatBox(`${this.title} !{0, 200, 0} déverrouillé`);
 			}
 			else {
 				this.lock();
-				player.outputChatBox(`${this.title} !{200, 0, 0} gesperrt`);
+				player.outputChatBox(`${this.title} !{200, 0, 0} fermé`);
 			}
 			vehicle.locked = !vehicle.locked;
 		}
@@ -105,7 +105,7 @@ class Vehicle {
 
 		vehicle.sellToGovernment = async function(player) {
 			if (vehicle.ownerId !== player.guid) return;
-			player.addBankMoney(this.price / 2, `verkaufen`);
+			player.addBankMoney(this.price / 2, `vendre`);
 			await misc.query(`DELETE FROM vehicles WHERE id = ${vehicle.guid} AND ownerId = '${player.guid}' LIMIT 1`);
 			this.destroy();
 		}
