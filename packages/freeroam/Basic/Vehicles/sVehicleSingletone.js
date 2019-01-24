@@ -163,7 +163,7 @@ class VehicleSingleton {
         if (!buyer) return;
         let execute = `app.whoName = '${seller.name}';`;
         execute += `app.whoId = ${seller.id};`;
-        execute += `app.wantText = 'Möchte Ihnen das Fahrzeug ${seller.vehicle.title} | ${seller.vehicle.numberPlate} verkaufen';`;
+        execute += `app.wantText = 'Voulez-vous le véhicule ${seller.vehicle.title} | ${seller.vehicle.numberPlate} vendre';`;
         execute += `app.price = ${data.price};`;
 
         buyer.call("cMisc-CreateChooseWindow", [execute, "sVehicle-ConfirmSellVehicleToPlayer", "sVehicle-RejectSellVehicleToPlayer"]);
@@ -172,8 +172,8 @@ class VehicleSingleton {
     rejectSellVehicleToPlayer(buyer, sellerId) {
         const seller = mp.players.at(sellerId);
         if (!seller) return;
-        buyer.notify(`Sie haben das Angebot von Bürger ${seller.name} abgelehnt!`);
-        seller.notify(`${buyer.name} hat Ihr Angebot abgelehnt!`);
+        buyer.notify(`Vous avez l'offre des citoyens ${seller.name} rejeté!`);
+        seller.notify(`${buyer.name} a rejeté votre offre!`);
     }
 
     async confirmSellVehicleToPlayer(buyer, sellerId, price) {
@@ -187,10 +187,10 @@ class VehicleSingleton {
         buyer.vehicle.whoCanOpen = [buyer.guid];
         await misc.query(`UPDATE vehcles SET ownerId = '${buyer.guid}', whoCanOpen = '${JSON.stringify([buyer.guid])}' WHERE id = '${buyer.vehicle.guid}' LIMIT 1`);
 
-        seller.notify(`~g~${buyer.name} hat Ihr Angebot angenommen!`);
-        buyer.notify(`~g~Sie haben das Angebot von Bürger ${seller.name} bestätigt!`);
+        seller.notify(`~g~${buyer.name} a accepté votre offre!`);
+        buyer.notify(`~g~Vous avez l'offre des citoyens ${seller.name} confirmé!`);
 
-        misc.log.debug(`${seller.name} sold ${seller.vehicle.title}(${seller.vehicle.guid}) for $${price} to ${buyer.name}`);
+        misc.log.debug(`${seller.name} sold ${seller.vehicle.title}(${seller.vehicle.guid}) pour $${price} a ${buyer.name}`);
     }
 
     getVehiclesForPlayerMenu(id) {
