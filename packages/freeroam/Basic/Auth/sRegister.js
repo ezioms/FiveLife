@@ -14,11 +14,11 @@ class RegiserSingleton extends AbstractAuth {
 
     async tryGetCodeToRegister(player, email) {
         if (!mailer.isEmailValid(email)) {
-            return this.showError(player, "Falsche E-Mail Adresse");
+            return this.showError(player, "Faux E-Mail Adresse");
         }
         const d = await misc.query(`SELECT email FROM users WHERE email = '${email}' LIMIT 1`);
         if (d[0]) {
-            return this.showError(player, "Diese E-Mail Adresse ist bereits in Verwendung");
+            return this.showError(player, "Cette adresse e-mail est déjà utilisée");
         }
         this.trySendCode(player, email);
     }
@@ -30,7 +30,7 @@ class RegiserSingleton extends AbstractAuth {
         }
         const lastGetCodeTime = ((new Date().getTime() - player.verificationDate) / 1000).toFixed();
         if (lastGetCodeTime < 60) {
-            return this.showError(player, `Bitte warte ${60 - lastGetCodeTime} Sekunden`);
+            return this.showError(player, `Veuillez patienter ${60 - lastGetCodeTime} Sekunden`);
             
         }
         this.sendCode(player, email);
@@ -44,11 +44,11 @@ class RegiserSingleton extends AbstractAuth {
     async checkUsername(player, obj) {
         const data = JSON.parse(obj);
         if (!data.firstName || !data.lastName) {
-            return this.showError(player, "Der Benutzername darf nicht leer sein");
+            return this.showError(player, "Le nom d utilisateur ne peut pas être vide");
         }
         const d = await misc.query(`SELECT firstName, lastName FROM users WHERE firstName = '${data.firstName}' AND lastName = '${data.lastName}' LIMIT 1`);
         if (d[0]) {
-            return this.showError(player, "Dieser Benutzername ist bereits in Verwendung");
+            return this.showError(player, "Ce nom d utilisateur est déjà utilisé");
         }
         player.call("cInjectCef", [`app.setNameAvailable();`]);
     }
@@ -56,11 +56,11 @@ class RegiserSingleton extends AbstractAuth {
     async tryCreateAccount(player, obj) {
         const data = JSON.parse(obj);
         if (!mailer.isEmailValid(data.email)) {
-            return this.showError(player, "Falsche E-mail Adresse");
+            return this.showError(player, "Faux E-mail Adresse");
         }
         const d = await misc.query(`SELECT email FROM users WHERE email = '${data.email}' LIMIT 1`);
         if (d[0]) {
-            return this.showError(player, "Huch... Es ist ein fehler aufgetreten. Versuche es erneut");
+            return this.showError(player, "Hein ... Une erreur est survenue. Essayez encore");
         }
         this.createAccount(player, data);
     }
@@ -82,16 +82,16 @@ class RegiserSingleton extends AbstractAuth {
             from: `${mailer.getMailAdress()}`,
             to: `${d.email}`,
             subject: `Registrierung Erfolgreich.`,
-            text: `Hallo! Danke für deine Registrierung auf Five Life. Nachfolgend deine Account Informationen: Vorname: ${d.firstName} Nachname: ${d.lastName} Passwort: ${d.pass}`,
-            html: ` <b>Hello!</b><br>
-                    Danke für deine Registrierung auf Five Life.<br>
-                    Nachfolgend deine Account Informationent:<br>
-                    <b>Vorname:</b> ${d.firstName}<br>
-                    <b>Nachname:</b> ${d.lastName}<br>
+            text: `Bonjour! Merci de vous être inscrit sur NOMDUSERV. Vous trouverez ci-dessous les informations relatives à votre compte: Prénom: Prénom: ${d.firstName} Nom: ${d.lastName} Passwort: ${d.pass}`,
+            html: ` <b>Bonjour!</b><br>
+                    Merci de vous être inscrit sur NOMDUSERV.<br>
+                    Vous trouverez ci-dessous les informations relatives à votre compte.:<br>
+                    <b>Prénom:</b> ${d.firstName}<br>
+                    <b>Nom:</b> ${d.lastName}<br>
                     <b>passwort:</b> ${d.pass}<br>`, 
         }
         mailer.sendMail(mail);
-        player.call("cInjectCef", [`app.showInfo('Erfolgreich! Nun kann es losgehen.');`]);
+        player.call("cInjectCef", [`app.showInfo('Succès! Maintenant tu peux commencer.');`]);
     }
     
 }
@@ -121,3 +121,4 @@ mp.events.add({
         regiserSingleton.tryCreateAccount(player, obj);
     },
 });
+
